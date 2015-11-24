@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 public class Kisokadai2 {
 
@@ -8,69 +10,59 @@ public class Kisokadai2 {
 	 */
 	public static void main(String[] args)
 	{
-		
-		System.out.println("数当てゲームを始めます！\n１～１００までの数字をコンピューターが\n"
-				+ "ランダムに決めます！当ててみて下さい！");
-		
-		int i =(int) (Math.random() * 100) + 1;
 
+
+
+		int i =0;
+		int a =0;
 		String str = null;
 		boolean fl = true;
-		
-		
-		while(fl)
-			
+
+
+		BufferedReader br =
+				new BufferedReader(new InputStreamReader(System.in));
+		//Randomクラスのインスタンス化
+		Random rnd = new Random();
+		//1～100まで
+		a = rnd.nextInt(100);
+		a+=1;
+
+		while(fl){
 			try{
-				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-				str = br .readLine();
-		 if(isNumber(str)){
-			 int a =Integer.parseInt(str);
-			 
-			 if((i - a <= 100 && (i - a) >= 50))
-			 System.out.println("はるか上です！");
-			 else if ((i - a) <= 49 && (i - a) >= 20)
-					System.out.println("もっと上です！");
-				else if ((i - a) <= 19 && (i - a) >= 5)
-					System.out.println("近い！もちっと上です！");
-				else if ((i - a) <= 4 && (i - a) >= 1)
-					System.out.println("惜しい、わずかに上");
-			 
-			 if (i < a)
-					if ((a - i) <= 100 && (a - i) >= 50)
-						System.out.println("はるか下です！");
-					else if ((a - i) <= 49 && (a - i) >= 20)
-						System.out.println("もっと下です！");
-					else if ((a - i) <= 19 && (a - i) >= 5)
-						System.out.println("近い！もちっと下です！");
-					else if ((a - i) <= 4 && (a -i ) >= 1)
-						System.out.println("惜しい！わずかに下です！");
-			 if(a==i)
-				 System.out.print("☆大正解☆");
-			 		else {
-						// 1～100以外の数値を入力した場合
-						System.out.println("１～１００までの値を入力して下さい！");
-							continue;
+			System.out.println("数当てゲームです！1～100までの間で、\nコンピュータが選んだ数字を当ててください。");
 
-					}
-				} else {
-					// 数値以外を入力した場合
-					System.out.println("１～１００までの値を入力して下さい。");
+    		str = br.readLine();
+    		i = Integer.parseInt(str);
+
+
+
+				if(i > 100 || i < 1){
 					continue;
-					
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.print("☆大正解☆");
-			}
-	}
+				}catch (NumberFormatException nfex) {
+					System.out.println("整数を入力してください");
+					continue;
+		    	}catch(IOException e){
+		    		System.out.println("何かエラー出たよ!");
+		    		e.printStackTrace();
+		    	}
 
-			// 数値型チェック
-			public static boolean isNumber(String val) {
-				try {
-					Integer.parseInt(val);
-					return true;
-				} catch (NumberFormatException nfex) {
-					return false;
-				}
-			}
+		    	//答えが合ってたらクリア！
+		    	if(i == a){
+		    		System.out.println("大当たり！！");
+		    		fl = false;
+
+		    		//選んだ数字よりコンピュータの数字の方が低かったら処理される。
+		    	}else if(a < i){
+		    		System.out.println("下の数字です！！");
+
+
+
+		    	}else{
+
+		    		System.out.println("上の数字です！！");
+
+		    	}
+		    }
 		}
+	}
